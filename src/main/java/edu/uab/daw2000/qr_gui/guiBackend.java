@@ -27,28 +27,27 @@ public class guiBackend {
   public static void main(String[] args) {
     var test1 = new backendCode("url");
     System.out.println(test1.getUrl());
-    System.out.println(test1.isValid());
     System.out.println(test1.toString());
   }
 
-  public static void displayQRCode(backendCode item) {
-    if (!item.isValid()) {
-      System.out.println("Stored information was not valid WAP information.");
+  public static void displayQRCode(backendCode test1) {
+    if (!test1.isValid()) {
+      System.out.println("Stored information was not a valid URL.");
       return;
     }
 
-    System.out.println(item.getUrl());
+    System.out.println(test1.getQrText());
 
     Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<>();
 
     hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
 
     // createQR(data, path, charset, hashMap, 200, 200);
-    String data = item.getUrl();
+    String data = test1.getQrText();
     int width = 200; // pixels
     int height = width; // pixels
     String charset = "UTF-8";
-    String path = "QR.png"; // put into target so does not go to repository
+    String path = "target/backendCode.png"; // put into target so does not go to repository
 
     try {
       BitMatrix matrix =
