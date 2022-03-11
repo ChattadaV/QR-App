@@ -20,14 +20,35 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import edu.uab.daw2000.qr_gui.backendCode;
+
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import java.util.Scanner;
+
 /** */
 public class guiBackend {
 
+  private String output;
+
   /** @param args the command line arguments */
-  public static void main(String[] args) {
-    var test1 = new backendCode("url");
-    System.out.println(test1.getUrl());
-    System.out.println(test1.toString());
+  public static void main(String[] args) throws WriterException, IOException, NotFoundException {
+
+    var test1 = new backendCode("");
+
+    test1.getUrl();
+
+    while (test1.isValid() == false) {
+      System.out.println("Invalid URL!");
+      test1.getUrl();
+    }
+
+    test1.toString(); // check if valid
+
+    displayQRCode(test1);
   }
 
   public static void displayQRCode(backendCode test1) {
@@ -48,6 +69,14 @@ public class guiBackend {
     int height = width; // pixels
     String charset = "UTF-8";
     String path = "target/backendCode.png"; // put into target so does not go to repository
+
+    try {
+      Image picture = ImageIO.read(new File("target/backendCode.png"));
+    } catch (IOException e) {
+      String workingDir = System.getProperty("user.dir");
+      System.out.println("Current working directory : " + workingDir);
+      e.printStackTrace();
+    }
 
     try {
       BitMatrix matrix =
