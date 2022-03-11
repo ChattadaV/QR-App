@@ -18,23 +18,20 @@ public class backendCode {
   private String output;
 
   public backendCode(String description) {
-    url = this.url;
+    this.url = url;
   }
 
   String getUrl() {
-
-    System.out.println("Enter the URL to be stored on the QR code:");
+    System.out.println("Enter a valid URL to be stored on the QR code:");
 
     Scanner scanUrl = new Scanner(System.in);
     output = scanUrl.nextLine();
-
-    scanUrl.close();
+    //    scanUrl.close();
 
     return output;
   }
 
   public boolean isValid() {
-
     // regular expression test does not like to be fed a null url
     if (output == null) {
       return false;
@@ -55,13 +52,24 @@ public class backendCode {
     return m.matches();
   }
 
+  @Override
   public String toString() {
-
-    return isValid() ? output : null;
+    return getQrText();
+    //      return "URL <" + output + "> is not valid" +
+    //    return isValid() ? output : "URL is not valid!";
   }
 
   public String getDescription() {
     return description;
+  }
+
+  /**
+   * Supply QR text for a WAP
+   *
+   * @return URL: *url*
+   */
+  public String getQrText() {
+    return "URL: " + output;
   }
 
   public String setDescription(String description) {
